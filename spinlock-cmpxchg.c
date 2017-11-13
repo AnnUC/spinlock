@@ -37,18 +37,7 @@ int main()
 
     for (long i = 0; i < nthr; i++)
         pthread_join(thr[i], NULL);
-/*
-    sl.lock = 0;
-    sl.thread_id = 0;
-    printf("%d\n",sl.lock);
-    printf("%d\n",sl.thread_id);
-    spin_lock(&sl);
-    printf("%d\n",sl.lock);
-    printf("%d\n",sl.thread_id);
-    spin_unlock(&sl);
-    printf("%d\n",sl.lock);
-    printf("%d\n",sl.thread_id);
-*/
+	
     return 0;
 
 }
