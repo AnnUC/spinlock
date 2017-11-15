@@ -7,19 +7,18 @@
 
 #include "spinlock-cmpxchg.h"
 
-#define NCOUNTER 10
+#define NCOUNTER 1000000
 static long counter=0;
 spinlock sl;
 
 void *inc_thread(void *id) {
     /* Start lock unlock test. */
-    spin_lock(&sl);
     printf("%s\n","new thread");
     for (int j = 0; j < NCOUNTER; j++) {
-	printf("%s%d\n","I am thread ",(int)id);
+        spin_lock(&sl);
         counter++;
+        spin_unlock(&sl);
     }
-    spin_unlock(&sl);
 }
 
 int main()
@@ -33,10 +32,11 @@ int main()
             perror("thread creating failed");
         }
     }
-    printf("%ld\n",counter);
 
     for (long i = 0; i < nthr; i++)
         pthread_join(thr[i], NULL);
+
+    printf("%ld\n",counter);
 /*
     sl.lock = 0;
     sl.thread_id = 0;
