@@ -20,7 +20,7 @@ void *inc_thread(void *id) {
     tid = syscall(SYS_gettid); 
     printf("%s:%d\n","new thread",tid);
     for (int j = 0; j < NCOUNTER; j++) {
-        spin_lock(&sl);
+        spin_lock(&sl, tid);
         counter++;
         spin_unlock(&sl);
     }

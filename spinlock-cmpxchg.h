@@ -23,9 +23,11 @@ SPINLOCK_ATTR char __testandset(spinlock *p, long old_val, long new_val)
     return result;
 }
 
-SPINLOCK_ATTR void spin_lock(spinlock *lock)
+SPINLOCK_ATTR void spin_lock(spinlock *lock, pid_t tid)
 {
-    while (__testandset(lock, 0, (30064771073))) {
+    long l_tid = tid;
+    l_tid = (l_tid << 32) + 1;
+    while (__testandset(lock, 0, l_tid)) {
         cpu_relax();
     }
 }

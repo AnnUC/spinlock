@@ -6,12 +6,12 @@
 
 int main()
 {
-    spinlock sl;
+    spinlock sl = SPINLOCK_INITIALIZER;
     sl.lock = 0;
-    sl.thread_id = 0;
+    sl.thread_id = 1;
     printf("%d\n",sl.lock);
     printf("%d\n",sl.thread_id);
-    spin_lock(&sl);
+    spin_lock(&sl,123);
     printf("%d\n",sl.lock);
     printf("%d\n",sl.thread_id);
     spin_unlock(&sl);
