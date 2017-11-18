@@ -16,11 +16,8 @@ spinlock sl;
 
 void *inc_thread(void *id) {
     /* Start lock unlock test. */
-    pid_t tid;
-    tid = syscall(SYS_gettid); 
-    printf("%s:%d\n","new thread",tid);
     for (int j = 0; j < NCOUNTER; j++) {
-        spin_lock(&sl, tid);
+        spin_lock(&sl);
         counter++;
         spin_unlock(&sl);
     }

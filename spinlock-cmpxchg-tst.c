@@ -1,17 +1,17 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <sys/types.h>
+#include <unistd.h>
+#include <sys/syscall.h>
 
 #include "spinlock-cmpxchg.h"
 
 int main()
 {
     spinlock sl = SPINLOCK_INITIALIZER;
-    sl.lock = 0;
-    sl.thread_id = 1;
     printf("%d\n",sl.lock);
     printf("%d\n",sl.thread_id);
-    spin_lock(&sl,123);
+    spin_lock(&sl);
     printf("%d\n",sl.lock);
     printf("%d\n",sl.thread_id);
     spin_unlock(&sl);
