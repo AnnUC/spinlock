@@ -1,3 +1,6 @@
+#define _GNU_SOURCE
+#include <unistd.h>
+#include <sys/syscall.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +16,9 @@ spinlock sl;
 
 void *inc_thread(void *id) {
     /* Start lock unlock test. */
-    printf("%s\n","new thread");
+    pid_t tid;
+    tid = syscall(SYS_gettid); 
+    printf("%s:%d\n","new thread",tid);
     for (int j = 0; j < NCOUNTER; j++) {
         spin_lock(&sl);
         counter++;
@@ -35,6 +40,7 @@ int main()
 
     for (long i = 0; i < nthr; i++)
         pthread_join(thr[i], NULL);
+    printf("total count: %ld\n",counter);
     return 0;
 
 }
